@@ -53,7 +53,28 @@ Client source hosted on S3
    aws copy to s3
    xo open browser pointing at s3 bucket
 
+- DynamoDB
+
+  Very simple setup, give a table a name and a primary key, done
+
+  Test its working with
+
+    aws dynamodb scan --table-name smartDevTeam
+    aws dynamodb put-item --table-name smartDevTeam  --item '{"id": {"S": "DDDAAA" }, "leaders": {"L": [ {"M": { "name": {"S": "peter"}, "time": {"N": "12.3"}}}]} }' --return-consumed-capacity TOTAL
+    aws dynamodb scan --table-name smartDevTeam
+    aws dynamodb delete-item --table-name smartDevTeam  --key '{"id": {"S": "DDDAAA" }}' --return-consumed-capacity TOTAL
+    aws dynamodb scan --table-name smartDevTeam
+
 Lambda hosted JS code to register reaction times and serve leader board
+
+  - in AWS console create function
+
+    aws lambda get-function --function-name smartReactionTimer
+
+  - in AWS console edit function add API Gateway
+
+    https://r41jxlsgq7.execute-api.eu-west-1.amazonaws.com/prod/smartReactionTimer
+
  - simple JS code process requests and write to db (websockets)
 
    cd server
