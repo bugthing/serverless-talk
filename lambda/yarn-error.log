@@ -1,14 +1,14 @@
 Arguments: 
-  /home/benjamin/.asdf/installs/nodejs/7.10.0/bin/node /home/benjamin/.asdf/installs/nodejs/7.10.0/.npm/bin/yarn publish
+  /home/benjamin/.asdf/installs/nodejs/6.11.3/bin/node /home/benjamin/.asdf/installs/nodejs/6.11.3/.npm/bin/yarn publish
 
 PATH: 
-  /var/lib/snapd/snap/bin:/home/benjamin/scripts:/home/benjamin/.asdf/bin:/home/benjamin/.asdf/shims:/usr/local/sbin:/usr/local/bin:/usr/bin:/var/lib/snapd/snap/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl
+  /var/lib/snapd/snap/bin:/home/benjamin/bin:/home/benjamin/scripts:/home/benjamin/.asdf/bin:/home/benjamin/.asdf/shims:/usr/local/sbin:/usr/local/bin:/usr/bin:/opt/android-sdk/platform-tools:/opt/android-sdk/tools:/opt/android-sdk/tools/bin:/var/lib/snapd/snap/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl
 
 Yarn version: 
-  1.3.2
+  1.2.1
 
 Node version: 
-  7.10.0
+  6.11.3
 
 Platform: 
   linux x64
@@ -135,13 +135,13 @@ Lockfile:
 
 Trace: 
   Error: canceled
-      at Interface.<anonymous> (/home/benjamin/.asdf/installs/nodejs/7.10.0/.npm/lib/node_modules/yarn/lib/cli.js:121045:13)
+      at Interface.<anonymous> (/home/benjamin/.asdf/installs/nodejs/6.11.3/.npm/lib/node_modules/yarn/lib/cli.js:120971:13)
       at emitNone (events.js:86:13)
-      at Interface.emit (events.js:188:7)
-      at Interface._ttyWrite (readline.js:733:16)
+      at Interface.emit (events.js:185:7)
+      at Interface._ttyWrite (readline.js:725:16)
       at ReadStream.onkeypress (readline.js:120:10)
       at emitTwo (events.js:106:13)
-      at ReadStream.emit (events.js:194:7)
-      at emitKeys (internal/readline.js:402:14)
-      at emitKeys.next (<anonymous>)
-      at ReadStream.onData (readline.js:980:36)
+      at ReadStream.emit (events.js:191:7)
+      at emitKeys (internal/readline.js:389:14)
+      at next (native)
+      at ReadStream.onData (readline.js:971:36)

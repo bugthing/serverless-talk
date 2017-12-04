@@ -1,5 +1,3 @@
-console.log('Loading function');
-
 const uuid = require('uuid');
 const doc = require('dynamodb-doc');
 
@@ -9,30 +7,31 @@ let tableName = 'smartDevTeam'
 
 exports.handler = (event, context, callback) => {
 
-    console.log('Received event:', JSON.stringify(event, null, 2));
-
-    const done = (err, res) => callback(null, {
-        statusCode: err ? '400' : '200',
-        body: err ? err.message : JSON.stringify(res),
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    });
-
     switch (event.httpMethod) {
-        case 'GET':
-            dynamo.scan({ TableName: tableName }, done)
-            break;
         case 'POST':
-            console.log(event.body)
-            let reactionEntry = Object.assign({}, event.body, { id: uuid.v4() })
-            console.log("bum")
-            dynamo.putItem(reactionEntry, function() {
-                dynamo.scan({ TableName: tableName }, done);
+            let payload = JSON.parse(event.body)
+            let doc = {
+                "TableName": tableName,
+                "Item" : {
+                    "id": uuid.v4(),
+                    "name": payload.name,
+                    "time": payload.time
+                }
+            }
+            dynamo.putItem(doc, (err, data) => {
+                dynamo.scan({ TableName: tableName }, (err, res) => {
+
+                    let leaderBoard = res.Items.sort((a, b) => { return a.time - b.time })
+                    
+                    callback(null, {
+                      statusCode: '200',
+                      body: JSON.stringify(leaderBoard),
+                      headers: { 'Content-Type': 'application/json' }})
+                })
             });
             break;
         default:
-            done(new Error(`Unsupported method "${event.httpMethod}"`));
+            callback(null, { statusCode: '400', body: 'Unsupported method' })
     }
 
 };

@@ -77,6 +77,8 @@ Lambda hosted JS code to register reaction times and serve leader board
 
  - simple JS code process requests and write to db (websockets)
 
+   curl -vvv -H "Content-Type: application/json" -X POST -d  '{"name": "peter","time":"9.12"}' https://r41jxlsgq7.execute-api.eu-west-1.amazonaws.com/prod/smartReactionTimer
+
    cd server
    yarn
    yarn start
