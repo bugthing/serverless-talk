@@ -1,0 +1,16 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "main": "server.js",
+  "license": "MIT",
+  "scripts": {
+    "run": "server.js"
+  },
+  "dependencies": {
+    "express": "^4.16.2",
+    "geoip-lite": "^1.2.1",
+    "http": "^0.0.0",
+    "useragent": "^2.2.1",
+    "ws": "^3.3.2"
+  }
+}
