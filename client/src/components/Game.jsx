@@ -5,10 +5,10 @@ import LeaderBoard from "./LeaderBoard.jsx";
 const url =
   "https://r41jxlsgq7.execute-api.eu-west-1.amazonaws.com/prod/smartReactionTimer";
 
-export default class Button extends React.Component {
+export default class Game extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { colour: "grey", leaders: [], disabled: true };
+    this.state = { colour: "white", leaders: [], disabled: true };
     this.setReactionTest = this.setReactionTest.bind(this);
   }
 
@@ -49,7 +49,7 @@ export default class Button extends React.Component {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          name: "Sid",
+          name: this.props.name,
           time: reactionTime.toString()
         })
       })
@@ -71,7 +71,7 @@ export default class Button extends React.Component {
           style={style}
           disabled={this.state.disabled}
         >
-          Click When Colour Changes
+          Get ready {this.props.name}, click when colour changes
         </button>
 
         <LeaderBoard leaders={this.state.leaders} />

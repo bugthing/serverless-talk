@@ -83,3 +83,5 @@ Lambda hosted JS code to register reaction times and serve leader board
    yarn
    yarn start
 
+ - Cors issues
+ - Not websocket support 
