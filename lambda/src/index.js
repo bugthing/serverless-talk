@@ -8,7 +8,12 @@ let tableName = 'smartDevTeam'
 exports.handler = (event, context, callback) => {
 
     switch (event.httpMethod) {
+        case 'OPTIONS':
+            callback(null, { statusCode: '200', body: 'OK' })
+            break;
         case 'POST':
+        console.log('event:')
+        console.log(event.body)
             let payload = JSON.parse(event.body)
             let doc = {
                 "TableName": tableName,
@@ -26,7 +31,9 @@ exports.handler = (event, context, callback) => {
                     callback(null, {
                       statusCode: '200',
                       body: JSON.stringify(leaderBoard),
-                      headers: { 'Content-Type': 'application/json' }})
+                      headers: { 'Content-Type': 'application/json',
+                                 "Access-Control-Allow-Origin": "*" }
+                    })
                 })
             });
             break;
