@@ -1,10 +1,27 @@
-body {       
-  color: #fff;     
+body {
+  color: #fff;
   background-color: lightgrey;
   font-size: 28px;
   font-weight: 300;
   font-family: 'Trebuchet MS', Trebuchet, 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-  margin: 0px; 
-  padding: 0px;      
-}             
-    
+  margin: 0px;
+  padding: 0px;
+}
+
+.center {
+    margin: auto;
+    text-align: center;
+    padding: 50px;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even){background-color: #f2f2f2}

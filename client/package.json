@@ -2,16 +2,15 @@
   "name": "client",
   "version": "1.0.0",
   "description": "Reaction time test and leader board",
-  "main": "index.js",
+  "main": "index.html",
   "license": "MIT",
   "scripts": {
-    "serve": "./node_modules/.bin/webpack-dev-server --content-base dist/ --inline --hot",
-    "build": "./node_modules/.bin/webpack --config webpack.config.js",
-    "pretty": "prettier  --write \"./src/**/*.js*\""
+    "serve":
+      "./node_modules/.bin/webpack-dev-server --content-base dist/ --inline --hot",
+    "build": "./node_modules/.bin/webpack --config webpack.config.js"
   },
   "dependencies": {
     "webpack": "^3.9.1",
-    "prettier": "^1.8.2",
     "react": "^16.0.0",
     "react-dom": "^16.0.0"
   },

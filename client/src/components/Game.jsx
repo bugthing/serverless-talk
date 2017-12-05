@@ -19,22 +19,17 @@ export default class Game extends React.Component {
 
   setReactionTest() {
     this.setState({
-      colour: this.getRandomColor(),
+      colour: "#ff69b4",
       createdTime: Date.now(),
       disabled: false
     });
   }
 
-  getRandomColor() {
-    let letters = "0123456789ABCDEF".split("");
-    let color = "#";
-    for (var i = 1; i < 7; i++) {
-      color += letters[Math.round(Math.random() * 15)];
-    }
-    return color;
-  }
-
   clickButton() {
+    if (this.state.disabled) {
+      return null;
+    }
+
     let clickedTime = Date.now();
     let createdTime = this.state.createdTime;
     let reactionTime = (clickedTime - createdTime) / 1000;
@@ -63,16 +58,20 @@ export default class Game extends React.Component {
   }
 
   render() {
-    let style = { backgroundColor: this.state.colour, padding: "50px" };
+    let colour = this.state.colour;
+    if (this.state.disabled) {
+      colour = "grey";
+    }
+    let style = { backgroundColor: colour, padding: "50px" };
     return (
       <div>
-        <button
+        <div
           onClick={e => this.clickButton(e)}
           style={style}
           disabled={this.state.disabled}
         >
           Get ready {this.props.name}, click when colour changes
-        </button>
+        </div>
 
         <LeaderBoard leaders={this.state.leaders} />
       </div>

@@ -38,26 +38,39 @@ AWS Lambda
 * How much does it cost?
 
   * not alot! 1M requests per month is free!
+  * you can tweak the container that executes your function, more memory = more money!
 
 Lets try it out
 ---------------
 
 Lets build a serverless application using a simple stack:
 
-Client source hosted on S3
- - simple JS client demo application (reaction timer)
++-----------------+          +--------------------+        +---------------+
+|                 |          |                    |        |               |
+|  JS Client (s3) + <------> + JS Server (Lambda) + <----> | DB (dynamodb) |
+|                 |          |                    |        |               |
++-----------------+          +--------------------+        +---------------+
 
-   cd client
-   yarn
-   yarn build
-   aws copy to s3
-   xo open browser pointing at s3 bucket
+### Client
 
-- DynamoDB
+The client is a static site, hosted on S3.
 
-  Very simple setup, give a table a name and a primary key, done
+Simple JS demo project using yarn and webpack to easily build the client then use `aws` cli tool to publish site to a bucket
 
-  Test its working with
+    cd client
+    yarn
+    yarn build
+    aws s3 mb s3://smartdev-reaction
+    aws s3 sync ./dist/ s3://smartdev-reaction/ --acl public-read-write
+    aws s3 presign s3://smartdev-reaction/index.html
+
+### Database
+
+Lets use AWS's document store service, DynamoDB (simlar to mongodb)
+
+    aws dynamodb create-table --table-name smartDevTeam
+
+You can test out writing documents to DynamoDB, like so:
 
     aws dynamodb scan --table-name smartDevTeam
     aws dynamodb put-item --table-name smartDevTeam  --item '{"id": {"S": "DDDAAA" }, "leaders": {"L": [ {"M": { "name": {"S": "peter"}, "time": {"N": "12.3"}}}]} }' --return-consumed-capacity TOTAL
@@ -65,23 +78,32 @@ Client source hosted on S3
     aws dynamodb delete-item --table-name smartDevTeam  --key '{"id": {"S": "DDDAAA" }}' --return-consumed-capacity TOTAL
     aws dynamodb scan --table-name smartDevTeam
 
-Lambda hosted JS code to register reaction times and serve leader board
+### Server
 
-  - in AWS console create function
+JS code running in AWS's Lambda service.
 
-    aws lambda get-function --function-name smartReactionTimer
+The sample code here is a handler that expects to be triggers via an Http API gateway
 
-  - in AWS console edit function add API Gateway
+Creating a function within Lambda is fairly streight forward. I found it abit tricky around permissions so going with the templates is a good idea.
 
-    https://r41jxlsgq7.execute-api.eu-west-1.amazonaws.com/prod/smartReactionTimer
+Once configured you can edit the function, view the logs and configure triggers all within the AWS console.
 
- - simple JS code process requests and write to db (websockets)
+Our function needs to have access to logs and api gateway
 
-   curl -vvv -H "Content-Type: application/json" -X POST -d  '{"name": "peter","time":"9.12"}' https://r41jxlsgq7.execute-api.eu-west-1.amazonaws.com/prod/smartReactionTimer
+CORS tripped me up abit, but this was easily fixed.
 
-   cd server
-   yarn
-   yarn start
+    cd lambda
+    yarn
+    yarn run publish
+    curl -vvv -H "Content-Type: application/json" -X POST -d  '{"name": "peter","time":"10.99"}' https://r41jxlsgq7.execute-api.eu-west-1.amazonaws.com/prod/smartReactionTimer
 
- - Cors issues
- - Not websocket support 
+Summary
+-------
+
+Its pretty simple to get going and I could imagine running certain applications in this style.
+
+Testing could get tricky but features like deploy environments could help out.
+
+Its all based on AWS services, migrating to another provider migth be costly
+
+Feels like early days for "serverless" and some frameworks are starting to appear.

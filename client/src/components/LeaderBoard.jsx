@@ -2,14 +2,27 @@ import React from "react";
 
 export default class LeaderBoard extends React.Component {
   render() {
-    let leaders = this.props.leaders.slice(0, 10).map((leader, i) => {
+    let leaders = this.props.leaders.slice(0, 20).map((leader, i) => {
       return (
-        <div key={i}>
-          {leader.name} / {leader.time}
-        </div>
+        <tr key={i}>
+          <td> {i + 1} </td>
+          <td> {leader.name} </td>
+          <td> {leader.time} </td>
+        </tr>
       );
     });
 
-    return <div>{leaders}</div>;
+    return (
+      <table>
+        <thead>
+          <tr>
+            <th>Pos.</th>
+            <th>Name</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>{leaders}</tbody>
+      </table>
+    );
   }
 }
