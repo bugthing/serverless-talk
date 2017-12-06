@@ -57,26 +57,44 @@ The client is a static site, hosted on S3.
 
 Simple JS demo project using yarn and webpack to easily build the client then use `aws` cli tool to publish site to a bucket
 
+* Build the html/css/js that forms your client.
+
     cd client
     yarn
     yarn build
+
+* Create a bucket to hold and serve the client source files
+
     aws s3 mb s3://smartdev-reaction
+
+* Push the source files into the bucket (and then open the url)
+
     aws s3 sync ./dist/ s3://smartdev-reaction/ --acl public-read-write
     aws s3 presign s3://smartdev-reaction/index.html
+
+* Remove bucket (when finished)
+
+    aws s3 rb s3://smartdev-reaction --force
 
 ### Database
 
 Lets use AWS's document store service, DynamoDB (simlar to mongodb)
 
-    aws dynamodb create-table --table-name smartDevTeam
+* Create a db table to push data into
+
+    aws dynamodb create-table --table-name smartDevTeam --attribute-definitions AttributeName=id,AttributeType=S --key-schema AttributeName=id,KeyType=HASH --provisioned-throughput ReadCapacityUnits=5,WriteCapacityUnits=5
 
 You can test out writing documents to DynamoDB, like so:
 
     aws dynamodb scan --table-name smartDevTeam
-    aws dynamodb put-item --table-name smartDevTeam  --item '{"id": {"S": "DDDAAA" }, "leaders": {"L": [ {"M": { "name": {"S": "peter"}, "time": {"N": "12.3"}}}]} }' --return-consumed-capacity TOTAL
+    aws dynamodb put-item --table-name smartDevTeam  --item '{"id": {"S": "DDDAAA" }, "name": {"S": "peter"}, "time": {"N": "12.3"}}' --return-consumed-capacity TOTAL
     aws dynamodb scan --table-name smartDevTeam
     aws dynamodb delete-item --table-name smartDevTeam  --key '{"id": {"S": "DDDAAA" }}' --return-consumed-capacity TOTAL
     aws dynamodb scan --table-name smartDevTeam
+
+* Remove db table (when finished)
+
+    aws dynamodb delete-table --table-name smartDevTeam
 
 ### Server
 
